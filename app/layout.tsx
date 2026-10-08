@@ -3,25 +3,12 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Muhammad Umair Hakeem | Full-Stack Developer',
-  description: 'Full-stack developer building modern web applications, AI-powered solutions, backend systems, and polished digital experiences.',
+  title: 'CernDev | Premium Tech Solutions',
+  description: 'CernDev builds modern web applications, AI-powered solutions, backend systems, and polished digital experiences.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/favicon.jpg',
+    apple: '/favicon.jpg',
   },
 }
 
