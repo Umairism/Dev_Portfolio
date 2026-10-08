@@ -1,36 +1,37 @@
 'use client'
-import { useState, useRef } from 'react'
-import emailjs from '@emailjs/browser'
+import { useState } from 'react'
 
 export default function Contact() {
-  const form = useRef<HTMLFormElement>(null)
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus('loading');
     
-    if (!form.current) return
-    setStatus('loading')
-
-    // TODO: Replace these with your actual EmailJS IDs
-    // 1. Service ID
-    // 2. Template ID
-    // 3. Public Key
-    emailjs.sendForm(
-      'YOUR_SERVICE_ID', 
-      'YOUR_TEMPLATE_ID', 
-      form.current, 
-      'YOUR_PUBLIC_KEY'
-    )
-    .then(() => {
-      setStatus('success')
-      form.current?.reset()
-      setTimeout(() => setStatus('idle'), 5000)
-    }, (error) => {
-      console.error(error)
-      setStatus('error')
-    })
-  }
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    formData.append("access_key", "a5587fb3-22b7-48ae-b12c-9da49a940e57");
+    
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      const data = await response.json();
+      
+      if (data.success) {
+        setStatus('success');
+        form.reset();
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        console.error("Error", data);
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+    }
+  };
 
   return (
     <section id="contact" className="border-t border-[var(--line)] bg-[#0e0e0c]">
@@ -49,16 +50,16 @@ export default function Contact() {
             </div>
           </div>
           
-          <form ref={form} onSubmit={sendEmail} className="glass-card flex flex-col gap-6 p-6 sm:p-9">
+          <form onSubmit={onSubmit} className="glass-card flex flex-col gap-6 p-6 sm:p-9">
             <div className="grid gap-6 sm:grid-cols-2">
               <label className="flex flex-col gap-2 font-mono text-[10px] uppercase tracking-widest text-[#777168]">
                 Name
-                <input required name="user_name" className="border-b border-[var(--line)] bg-transparent py-3 text-base normal-case tracking-normal text-white outline-none transition-colors focus:border-[var(--accent)]" placeholder="Your name"/>
+                <input required name="name" className="border-b border-[var(--line)] bg-transparent py-3 text-base normal-case tracking-normal text-white outline-none transition-colors focus:border-[var(--accent)]" placeholder="Your name"/>
               </label>
               
               <label className="flex flex-col gap-2 font-mono text-[10px] uppercase tracking-widest text-[#777168]">
                 Email
-                <input required type="email" name="user_email" className="border-b border-[var(--line)] bg-transparent py-3 text-base normal-case tracking-normal text-white outline-none focus:border-[var(--accent)]" placeholder="you@example.com"/>
+                <input required type="email" name="email" className="border-b border-[var(--line)] bg-transparent py-3 text-base normal-case tracking-normal text-white outline-none focus:border-[var(--accent)]" placeholder="you@example.com"/>
               </label>
             </div>
             
@@ -77,6 +78,8 @@ export default function Contact() {
               <textarea required name="message" rows={4} className="resize-none border-b border-[var(--line)] bg-transparent py-3 text-base normal-case tracking-normal text-white outline-none focus:border-[var(--accent)]" placeholder="What are we building?"/>
             </label>
             
+            <input type="hidden" name="subject" value="New Submission from CernDev Portfolio" />
+
             <button 
               disabled={status === 'loading'}
               className="self-start rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-bold text-[#17120f] transition-transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100" 
@@ -85,7 +88,7 @@ export default function Contact() {
               {status === 'loading' ? 'Sending...' : status === 'success' ? 'Message received ✓' : status === 'error' ? 'Error sending ✕' : 'Send inquiry ↗'}
             </button>
             {status === 'error' && (
-              <p className="text-red-500 text-sm mt-2">Failed to send message. Please check your EmailJS configuration.</p>
+              <p className="text-red-500 text-sm mt-2">Failed to send message. Please try again.</p>
             )}
           </form>
         </div>

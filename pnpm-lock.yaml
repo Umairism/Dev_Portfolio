@@ -11,9 +11,6 @@ importers:
       '@base-ui/react':
         specifier: ^1.5.0
         version: 1.5.0(@date-fns/tz@1.4.1)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@emailjs/browser':
-        specifier: ^5.0.2
-        version: 5.0.2
       '@vercel/analytics':
         specifier: 1.6.1
         version: 1.6.1(next@16.4.0(@babel/core@7.29.7)(@types/node@24.10.4)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
@@ -176,10 +173,6 @@ packages:
 
   '@date-fns/tz@1.4.1':
     resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
-
-  '@emailjs/browser@5.0.2':
-    resolution: {integrity: sha512-yhfjhO6q6843CXUxZcJ5iw+HLtLvNbdt0wx/cJ6upREmD/biKoB7hAAO1HnYqhSH7owIUgwIbZOxSOblZyN3cQ==}
-    engines: {node: '>=14.0.0'}
 
   '@emnapi/runtime@1.11.3':
     resolution: {integrity: sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==}
@@ -1037,8 +1030,6 @@ snapshots:
 
   '@date-fns/tz@1.4.1':
     optional: true
-
-  '@emailjs/browser@5.0.2': {}
 
   '@emnapi/runtime@1.11.3':
     dependencies:
